@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../lib/supabaseClient.js';
 import { X, Save, Loader2 } from 'lucide-react';
 
-const TestimonialForm = ({ onClose, onSaved }) => {
+const TestimonialForm = ({ onClose, onSaved, initialData }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -10,13 +10,36 @@ const TestimonialForm = ({ onClose, onSaved }) => {
     text: ''
   });
 
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        name: initialData.name || '',
+        role: initialData.role || '',
+        text: initialData.text || ''
+      });
+    }
+  }, [initialData]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const { error } = await supabase.from('testimonials').insert([formData]);
-      if (error) throw error;
+      if (initialData) {
+        // Update existing
+        const { error } = await supabase
+          .from('testimonials')
+          .update(formData)
+          .eq('id', initialData.id);
+        if (error) throw error;
+      } else {
+        // Insert new
+        const { error } = await supabase
+          .from('testimonials')
+          .insert([formData]);
+        if (error) throw error;
+      }
+      
       onSaved();
       onClose();
     } catch (error) {
@@ -31,7 +54,9 @@ const TestimonialForm = ({ onClose, onSaved }) => {
       <div className="bg-zinc-900 border border-fuchsia-500/30 p-6 w-full max-w-md clip-polygon-card relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-zinc-500 hover:text-white"><X /></button>
         
-        <h2 className="text-xl font-bold text-fuchsia-500 mb-6 font-mono uppercase border-b border-zinc-800 pb-2">Log Feedback</h2>
+        <h2 className="text-xl font-bold text-fuchsia-500 mb-6 font-mono uppercase border-b border-zinc-800 pb-2">
+          {initialData ? `Edit Feedback: ${initialData.id}` : 'Log Feedback'}
+        </h2>
         
         <form onSubmit={handleSubmit} className="space-y-4 font-mono">
           <div>
@@ -53,7 +78,7 @@ const TestimonialForm = ({ onClose, onSaved }) => {
           </div>
 
           <button disabled={loading} type="submit" className="w-full bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold py-3 mt-4 flex justify-center items-center gap-2 uppercase tracking-widest clip-polygon">
-            {loading ? <Loader2 className="animate-spin" /> : <><Save size={18} /> Archive Data</>}
+            {loading ? <Loader2 className="animate-spin" /> : <><Save size={18} /> {initialData ? 'Update Archive' : 'Archive Data'}</>}
           </button>
         </form>
       </div>

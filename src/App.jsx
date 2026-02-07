@@ -1,21 +1,24 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Public Components
-import NavBar from './components/layout/NavBar';
-import Footer from './components/layout/Footer';
-import ScanlineOverlay from './components/ui/ScanlineOverlay';
-import Hero from './components/sections/Hero';
-import AboutAndSkills from './components/sections/AboutAndSkills';
-import Projects from './components/sections/Projects';
-import Testimonials from './components/sections/Testimonials';
+// Public Components - Using absolute paths to fix resolution errors
+import NavBar from '/src/components/layout/NavBar.jsx';
+import Footer from '/src/components/layout/Footer.jsx';
+import ScanlineOverlay from '/src/components/layout/ScanlineOverlay.jsx';
+import Hero from '/src/components/sections/Hero.jsx';
+import AboutAndSkills from '/src/components/sections/AboutAndSkills.jsx';
+import Projects from '/src/components/sections/Projects.jsx';
+import Testimonials from '/src/components/sections/Testimonials.jsx';
 
 // Admin Components
-import Login from './components/admin/Login';
-import Dashboard from './components/admin/Dashboard';
+import Login from '/src/components/admin/Login.jsx';
+import Dashboard from '/src/components/admin/Dashboard.jsx';
+
+// UI Components
+import CustomCursor from '/src/components/ui/CustomCursor.jsx';
 
 // Styles
-import { globalStyles } from './styles/globals';
+import { globalStyles } from '/src/styles/globals.js';
 
 const PublicPortfolio = () => (
   <div className="bg-black min-h-screen text-white font-sans selection:bg-fuchsia-500 selection:text-white">
@@ -33,6 +36,7 @@ export default function App() {
   return (
     <>
       <style>{globalStyles}</style>
+      <CustomCursor />
       <Router>
         <Routes>
           {/* Public Routes */}
