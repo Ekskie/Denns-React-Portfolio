@@ -17,7 +17,7 @@ const ProfileAvatar = () => (
 
       {/* THE IMAGE SLOT: Replace the src below with your actual image path */}
       <img 
-        src="/Agustin, Denn 8R-1.jpg"
+        src="/denn.png"
         alt="Dennrick Agustin" 
         className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
       />
