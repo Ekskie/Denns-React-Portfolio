@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Gamepad2, Menu, X } from 'lucide-react';
+import { Gamepad2, Menu, X, FileText, Download } from 'lucide-react';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,18 +30,37 @@ const NavBar = () => {
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-1">
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href} 
-              className="relative px-4 py-2 text-sm uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors group overflow-hidden"
-            >
-              <span className="relative z-10">{link.name}</span>
-              <div className="absolute inset-0 bg-cyan-900/20 skew-x-12 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            </a>
-          ))}
-          <a href="#contact" className="ml-6 px-6 py-2 bg-fuchsia-600 hover:bg-fuchsia-500 text-white text-xs font-bold uppercase tracking-widest clip-polygon transition-all hover:scale-105">
+        <div className="hidden md:flex items-center space-x-4">
+          <div className="flex items-center space-x-1 mr-4">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="relative px-4 py-2 text-sm uppercase tracking-widest text-gray-400 hover:text-cyan-400 transition-colors group overflow-hidden"
+              >
+                <span className="relative z-10">{link.name}</span>
+                <div className="absolute inset-0 bg-cyan-900/20 skew-x-12 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              </a>
+            ))}
+          </div>
+
+          {/* Resume Button */}
+          <a 
+            href="/resume.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group relative flex items-center gap-2 px-5 py-2 bg-cyan-500 text-black font-bold text-xs uppercase tracking-widest transition-all hover:bg-cyan-400 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)] hover:-translate-y-0.5"
+            style={{ clipPath: 'polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)' }}
+          >
+            <FileText size={14} className="group-hover:rotate-12 transition-transform" />
+            <span>Resume</span>
+          </a>
+
+          {/* Contact Button */}
+          <a 
+            href="#contact" 
+            className="px-6 py-2 bg-fuchsia-600 hover:bg-fuchsia-500 text-white text-xs font-bold uppercase tracking-widest clip-polygon transition-all hover:scale-105 shadow-[0_0_10px_rgba(192,38,211,0.3)]"
+          >
             Contact Me
           </a>
         </div>
@@ -53,17 +72,30 @@ const NavBar = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="absolute top-full left-0 w-full bg-black border-b border-zinc-800 p-6 flex flex-col space-y-4 md:hidden animate-in slide-in-from-top-5 z-50">
+          <div className="absolute top-full left-0 w-full bg-black border-b border-zinc-800 p-6 flex flex-col space-y-4 md:hidden animate-in slide-in-from-top-5 z-50 shadow-2xl">
             {navLinks.map((link) => (
               <a 
                 key={link.name} 
                 href={link.href} 
-                className="text-lg font-mono text-gray-300 hover:text-cyan-400 uppercase"
+                className="text-lg font-mono text-gray-300 hover:text-cyan-400 uppercase border-l-2 border-transparent hover:border-cyan-500 pl-3 transition-all"
                 onClick={() => setIsOpen(false)}
               >
                 {`> ${link.name}`}
               </a>
             ))}
+            
+            <div className="h-px bg-zinc-800 my-2"></div>
+            
+            <a 
+              href="/resume.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold font-mono transition-colors rounded-sm uppercase tracking-wider text-sm"
+              onClick={() => setIsOpen(false)}
+            >
+              <Download size={16} />
+              Download Resume
+            </a>
           </div>
         )}
       </div>
