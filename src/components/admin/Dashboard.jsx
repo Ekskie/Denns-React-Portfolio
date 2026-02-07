@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabaseClient';
-import { Trash2, Plus, LogOut, LayoutGrid, MessageSquare } from 'lucide-react';
+import { Trash2, Plus, LogOut, LayoutGrid, MessageSquare, Pencil } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ProjectForm from './ProjectForm';
 import TestimonialForm from './TestimonialForm';
@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('projects'); // 'projects' or 'testimonials'
   const [dataList, setDataList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState(null); // Track item being edited
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,16 @@ const Dashboard = () => {
     
     if (!error) fetchData();
     else alert("Deletion failed: " + error.message);
+  };
+
+  const handleEdit = (item) => {
+    setEditingItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleAddNew = () => {
+    setEditingItem(null);
+    setIsModalOpen(true);
   };
 
   const handleLogout = async () => {
@@ -76,7 +87,7 @@ const Dashboard = () => {
                Database: <span className={activeTab === 'projects' ? 'text-cyan-400' : 'text-fuchsia-500'}>{activeTab}</span>
             </h2>
             <button 
-              onClick={() => setIsModalOpen(true)}
+              onClick={handleAddNew}
               className={`px-4 py-2 text-sm font-bold flex items-center gap-2 clip-polygon transition-all hover:scale-105 ${activeTab === 'projects' ? 'bg-cyan-500 text-black hover:bg-cyan-400' : 'bg-fuchsia-500 text-white hover:bg-fuchsia-400'}`}
             >
               <Plus size={16} /> Add Entry
@@ -85,11 +96,11 @@ const Dashboard = () => {
 
           <div className="grid gap-3">
             {dataList.map((item) => (
-              <div key={item.id} className="bg-zinc-900/50 border border-zinc-800 p-4 flex justify-between items-center hover:border-zinc-600 transition-colors">
+              <div key={item.id} className="bg-zinc-900/50 border border-zinc-800 p-4 flex justify-between items-center hover:border-zinc-600 transition-colors group">
                 <div className="flex gap-4 items-center">
                   {/* Image preview only for projects */}
                   {activeTab === 'projects' && item.image_url && (
-                    <img src={item.image_url} alt="" className="w-16 h-12 object-cover bg-black border border-zinc-700" />
+                    <img src={item.image_url} alt="" className="w-16 h-12 object-cover bg-black border border-zinc-700 grayscale group-hover:grayscale-0 transition-all" />
                   )}
                   
                   <div>
@@ -104,14 +115,20 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                   {/* Add Edit button logic here if needed later */}
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => handleEdit(item)}
+                    className="p-3 text-cyan-500 hover:bg-cyan-500/10 rounded transition-colors"
+                    title="Edit Entry"
+                  >
+                    <Pencil size={18} />
+                  </button>
                   <button 
                     onClick={() => deleteItem(item.id)}
-                    className="p-3 text-red-500 hover:bg-red-500/10 rounded transition-colors group"
+                    className="p-3 text-red-500 hover:bg-red-500/10 rounded transition-colors"
                     title="Delete Entry"
                   >
-                    <Trash2 size={18} className="group-hover:animate-pulse" />
+                    <Trash2 size={18} />
                   </button>
                 </div>
               </div>
@@ -127,11 +144,19 @@ const Dashboard = () => {
         
         {/* Modals */}
         {isModalOpen && activeTab === 'projects' && (
-          <ProjectForm onClose={() => setIsModalOpen(false)} onSaved={fetchData} />
+          <ProjectForm 
+            onClose={() => setIsModalOpen(false)} 
+            onSaved={fetchData} 
+            initialData={editingItem} // Pass the item to edit
+          />
         )}
 
         {isModalOpen && activeTab === 'testimonials' && (
-          <TestimonialForm onClose={() => setIsModalOpen(false)} onSaved={fetchData} />
+          <TestimonialForm 
+            onClose={() => setIsModalOpen(false)} 
+            onSaved={fetchData}
+            initialData={editingItem} // Pass the item to edit
+          />
         )}
 
       </div>
