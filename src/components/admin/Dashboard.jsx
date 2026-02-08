@@ -1,20 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
-import { Trash2, Plus, LogOut, LayoutGrid, MessageSquare, Pencil } from 'lucide-react';
+// Using explicit paths from root to ensure resolution
+import { supabase } from '../../../src/lib/supabaseClient.js';
+import { Trash2, Plus, LogOut, LayoutGrid, MessageSquare, Pencil, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import ProjectForm from './ProjectForm';
-import TestimonialForm from './TestimonialForm';
+import ProjectForm from '../../../src/components/admin/ProjectForm.jsx';
+import TestimonialForm from '../../../src/components/admin/TestimonialForm.jsx';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('projects'); // 'projects' or 'testimonials'
   const [dataList, setDataList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null); // Track item being edited
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Security Check & Initial Load
   useEffect(() => {
-    fetchData();
-  }, [activeTab]);
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+          // No active session, redirect to login
+          navigate('/admin');
+        } else {
+          // Session valid, allow access
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error("Auth verification failed:", error);
+        navigate('/admin');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkSession();
+  }, [navigate]);
+
+  // Fetch data when tab changes or after auth is confirmed
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchData();
+    }
+  }, [activeTab, isAuthenticated]);
 
   const fetchData = async () => {
     const table = activeTab === 'projects' ? 'projects' : 'testimonials';
@@ -46,6 +76,21 @@ const Dashboard = () => {
     await supabase.auth.signOut();
     navigate('/admin');
   };
+
+  // Loading Screen
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center font-mono">
+        <div className="flex flex-col items-center gap-4">
+            <Loader2 size={32} className="animate-spin text-cyan-500" />
+            <span className="text-zinc-500 text-sm tracking-widest">VERIFYING CREDENTIALS...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Prevent rendering if not authenticated (extra safety layer)
+  if (!isAuthenticated) return null;
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-4 md:p-8 font-mono">
@@ -84,7 +129,7 @@ const Dashboard = () => {
         <div>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold uppercase text-gray-300">
-               Database: <span className={activeTab === 'projects' ? 'text-cyan-400' : 'text-fuchsia-500'}>{activeTab}</span>
+                Database: <span className={activeTab === 'projects' ? 'text-cyan-400' : 'text-fuchsia-500'}>{activeTab}</span>
             </h2>
             <button 
               onClick={handleAddNew}
@@ -136,7 +181,7 @@ const Dashboard = () => {
             
             {dataList.length === 0 && (
               <div className="text-center py-20 border border-dashed border-zinc-800 text-gray-600">
-                 NO ARTIFACTS FOUND IN SECTOR
+                  NO ARTIFACTS FOUND IN SECTOR
               </div>
             )}
           </div>

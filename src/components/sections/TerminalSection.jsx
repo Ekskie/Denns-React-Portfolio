@@ -4,8 +4,8 @@ import { Terminal, X, Minus, Square, ChevronRight, Command } from 'lucide-react'
 const TerminalSection = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState([
-    { type: 'system', content: 'DennOS v2.6.0 [Secure Connection]' },
-    { type: 'system', content: 'Copyright (c) 2024 Dennrick Agustin' },
+    { type: 'system', content: 'EkskieOS v2.6.0 [Secure Connection]' },
+    { type: 'system', content: 'Copyright (c) 2026 Dennrick Agustin' },
     { type: 'info', content: 'Type "help" to see available commands.' },
   ]);
   
