@@ -15,6 +15,8 @@ import TerminalSection from './components/sections/TerminalSection.jsx';
 
 // Pages
 import NotFound from './components/pages/NotFound.jsx';
+import SitePolicy from './components/pages/SitePrivacy.jsx';
+import Legal from './components/pages/Legal.jsx';
 
 // Admin Components
 import Login from './components/admin/Login.jsx';
@@ -66,6 +68,8 @@ export default function App() {
             <Routes>
             {/* Public Routes */}
             <Route path="/" element={<PublicPortfolio />} />
+            <Route path="/privacy" element={<SitePolicy />} />
+            <Route path="/legal" element={<Legal />} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<Login />} />

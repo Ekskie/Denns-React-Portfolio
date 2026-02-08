@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, X, Minus, Square, ChevronRight, Command } from 'lucide-react';
+import { Terminal, Command } from 'lucide-react';
 
 const TerminalSection = () => {
   const [input, setInput] = useState('');
@@ -112,16 +112,16 @@ const TerminalSection = () => {
       case 'help':
         response = (
           <div className="space-y-1 mt-2 mb-2">
-            <p className="text-zinc-300">Available commands:</p>
+            <p className="text-zinc-600 dark:text-zinc-300">Available commands:</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1 md:w-2/3">
-              <div><span className="text-cyan-400 font-bold">about</span> <span className="text-zinc-500">-</span> <span className="text-zinc-400">Who is Dennrick?</span></div>
-              <div><span className="text-cyan-400 font-bold">skills</span> <span className="text-zinc-500">-</span> <span className="text-zinc-400">View tech stack</span></div>
-              <div><span className="text-cyan-400 font-bold">projects</span> <span className="text-zinc-500">-</span> <span className="text-zinc-400">Navigate to work</span></div>
-              <div><span className="text-cyan-400 font-bold">contact</span> <span className="text-zinc-500">-</span> <span className="text-zinc-400">Send a signal</span></div>
-              <div><span className="text-cyan-400 font-bold">clear</span> <span className="text-zinc-500">-</span> <span className="text-zinc-400">Clear screen</span></div>
-              <div><span className="text-fuchsia-400 font-bold">play game</span> <span className="text-zinc-500">-</span> <span className="text-zinc-400">Start minigame</span></div>
+              <div><span className="text-cyan-600 dark:text-cyan-400 font-bold">about</span> <span className="text-zinc-400 dark:text-zinc-500">-</span> <span className="text-zinc-500 dark:text-zinc-400">Who is Dennrick?</span></div>
+              <div><span className="text-cyan-600 dark:text-cyan-400 font-bold">skills</span> <span className="text-zinc-400 dark:text-zinc-500">-</span> <span className="text-zinc-500 dark:text-zinc-400">View tech stack</span></div>
+              <div><span className="text-cyan-600 dark:text-cyan-400 font-bold">projects</span> <span className="text-zinc-400 dark:text-zinc-500">-</span> <span className="text-zinc-500 dark:text-zinc-400">Navigate to work</span></div>
+              <div><span className="text-cyan-600 dark:text-cyan-400 font-bold">contact</span> <span className="text-zinc-400 dark:text-zinc-500">-</span> <span className="text-zinc-500 dark:text-zinc-400">Send a signal</span></div>
+              <div><span className="text-cyan-600 dark:text-cyan-400 font-bold">clear</span> <span className="text-zinc-400 dark:text-zinc-500">-</span> <span className="text-zinc-500 dark:text-zinc-400">Clear screen</span></div>
+              <div><span className="text-fuchsia-600 dark:text-fuchsia-400 font-bold">play game</span> <span className="text-zinc-400 dark:text-zinc-500">-</span> <span className="text-zinc-500 dark:text-zinc-400">Start minigame</span></div>
             </div>
-            <p className="text-zinc-600 mt-2 text-xs">Tip: Try finding hidden commands...</p>
+            <p className="text-zinc-500 dark:text-zinc-600 mt-2 text-xs">Tip: Try finding hidden commands...</p>
           </div>
         );
         break;
@@ -132,7 +132,9 @@ const TerminalSection = () => {
         response = (
           <div className="flex flex-wrap gap-2 mt-1">
             {['React', 'Node.js', 'Three.js', 'TailwindCSS', 'Godot', 'Python', 'Firebase'].map(skill => (
-                <span key={skill} className="px-2 py-0.5 bg-cyan-900/30 text-cyan-400 border border-cyan-800/50 rounded text-xs font-mono">
+                <span key={skill} className="px-2 py-0.5 rounded text-xs font-mono border
+                  bg-cyan-100 text-cyan-700 border-cyan-200
+                  dark:bg-cyan-900/30 dark:text-cyan-400 dark:border-cyan-800/50">
                     {skill}
                 </span>
             ))}
@@ -160,10 +162,10 @@ const TerminalSection = () => {
         const target = Math.floor(Math.random() * 100) + 1;
         setGameState({ active: true, target: target, attempts: 0 });
         response = (
-            <div className="text-fuchsia-300">
+            <div className="text-fuchsia-600 dark:text-fuchsia-300">
                 <p>⚠️ SECURITY PROTOCOL INITIATED</p>
                 <p>Firewall detected. To bypass, you must guess the decryption key (Number between 1-100).</p>
-                <p className="mt-1 text-zinc-500 text-xs">Type 'exit' to quit anytime.</p>
+                <p className="mt-1 text-zinc-500 dark:text-zinc-500 text-xs">Type 'exit' to quit anytime.</p>
             </div>
         );
         break;
@@ -178,7 +180,7 @@ const TerminalSection = () => {
         break;
       case 'ls':
         response = (
-            <div className="grid grid-cols-3 gap-4 text-fuchsia-400">
+            <div className="grid grid-cols-3 gap-4 text-fuchsia-600 dark:text-fuchsia-400">
                 <span>secret_plans.txt</span>
                 <span>world_domination.sh</span>
                 <span>cat_photos/</span>
@@ -189,7 +191,7 @@ const TerminalSection = () => {
         response = "Meow. 🐱";
         break;
       case 'matrix':
-        response = <span className="text-green-500 animate-pulse">Wake up, Neo... The Matrix has you...</span>;
+        response = <span className="text-green-600 dark:text-green-500 animate-pulse">Wake up, Neo... The Matrix has you...</span>;
         break;
       case '':
         response = null;
@@ -215,30 +217,47 @@ const TerminalSection = () => {
   };
 
   return (
-    <section ref={containerRef} className="py-24 bg-black relative flex justify-center items-center px-4 overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.05)_0%,transparent_70%)] pointer-events-none"></div>
-        <div className="absolute bottom-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-900/50 to-transparent"></div>
+    <section ref={containerRef} className="py-24 relative flex justify-center items-center px-4 overflow-hidden transition-colors duration-500
+      bg-zinc-50 dark:bg-black border-t border-zinc-200 dark:border-zinc-900">
+        
+        {/* Background Effects (Grid from other sections) */}
+        <div className="absolute inset-0 bg-[size:40px_40px] pointer-events-none opacity-30
+            bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)]
+            dark:bg-[linear-gradient(rgba(34,211,238,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.05)_1px,transparent_1px)]">
+        </div>
+        
+        <div className="absolute bottom-0 w-full h-px 
+            bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent">
+        </div>
 
         <div className="w-full max-w-3xl relative z-10 group">
             
             {/* Glow Effect behind terminal */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+            <div className="absolute -inset-1 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000
+                bg-gradient-to-r from-cyan-400/30 to-fuchsia-500/30
+                dark:from-cyan-500/20 dark:to-fuchsia-500/20">
+            </div>
 
             {/* Terminal Window */}
-            <div className="relative bg-[#0c0c0c] backdrop-blur-xl border border-zinc-800 rounded-lg overflow-hidden shadow-2xl flex flex-col h-[500px]">
+            <div className="relative backdrop-blur-xl border rounded-lg overflow-hidden shadow-2xl flex flex-col h-[500px] transition-colors duration-500
+                bg-white/90 border-zinc-200
+                dark:bg-[#0c0c0c] dark:border-zinc-800">
                 
                 {/* Header Bar */}
-                <div className="bg-zinc-900/80 px-4 py-3 flex items-center justify-between border-b border-zinc-800">
+                <div className="px-4 py-3 flex items-center justify-between border-b transition-colors duration-500
+                    bg-zinc-100/80 border-zinc-200
+                    dark:bg-zinc-900/80 dark:border-zinc-800">
                     <div className="flex items-center gap-3">
                         <div className="flex gap-1.5">
                             <div className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors"></div>
                             <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors"></div>
                             <div className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors"></div>
                         </div>
-                        <div className="flex items-center gap-2 ml-2 text-zinc-400 bg-black/30 px-3 py-1 rounded-md border border-zinc-800/50">
-                            <Terminal size={12} className="text-cyan-500" />
-                            <span className="text-xs font-mono">guest@denn-portfolio:~</span>
+                        <div className="flex items-center gap-2 ml-2 px-3 py-1 rounded-md border text-xs font-mono
+                            bg-zinc-200/50 text-zinc-600 border-zinc-300/50
+                            dark:bg-black/30 dark:text-zinc-400 dark:border-zinc-800/50">
+                            <Terminal size={12} className="text-cyan-600 dark:text-cyan-500" />
+                            <span>guest@denn-portfolio:~</span>
                         </div>
                     </div>
                 </div>
@@ -246,41 +265,50 @@ const TerminalSection = () => {
                 {/* Terminal Content */}
                 <div 
                     ref={terminalBodyRef}
-                    className="flex-1 p-6 overflow-y-auto font-mono text-sm md:text-base scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent"
+                    className="flex-1 p-6 overflow-y-auto font-mono text-sm md:text-base scrollbar-thin scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-800 scrollbar-track-transparent"
                     onClick={() => inputRef.current?.focus()}
                 >
                     {output.map((line, i) => (
                         <div key={i} className="mb-2 last:mb-0">
                             {line.type === 'command' ? (
-                                 <div className="flex items-start gap-2 text-zinc-400 mt-4">
-                                    <span className="text-fuchsia-500 shrink-0">➜</span>
-                                    <span className="text-zinc-500 shrink-0">~</span>
-                                    <span className="text-white font-bold">{line.content}</span>
+                                 <div className="flex items-start gap-2 mt-4
+                                    text-zinc-400">
+                                    <span className="shrink-0 text-fuchsia-600 dark:text-fuchsia-500">➜</span>
+                                    <span className="shrink-0 text-zinc-400 dark:text-zinc-500">~</span>
+                                    <span className="font-bold text-zinc-900 dark:text-white">{line.content}</span>
                                  </div>
                             ) : line.type === 'system' ? (
-                                <div className="text-cyan-500/60 text-xs uppercase tracking-widest mb-1">{line.content}</div>
+                                <div className="text-xs uppercase tracking-widest mb-1
+                                    text-cyan-700 dark:text-cyan-500/60">{line.content}</div>
                             ) : line.type === 'info' ? (
-                                <div className="text-zinc-400 italic mb-2">{line.content}</div>
+                                <div className="italic mb-2
+                                    text-zinc-500 dark:text-zinc-400">{line.content}</div>
                             ) : line.type === 'error' ? (
-                                <div className="text-red-400 bg-red-900/10 inline-block px-2 py-0.5 rounded border border-red-900/30">{line.content}</div>
+                                <div className="inline-block px-2 py-0.5 rounded border
+                                    text-red-600 bg-red-100/50 border-red-200
+                                    dark:text-red-400 dark:bg-red-900/10 dark:border-red-900/30">{line.content}</div>
                             ) : line.type === 'success' ? (
-                                <div className="text-green-400 font-bold ml-6">{line.content}</div>
+                                <div className="font-bold ml-6
+                                    text-green-600 dark:text-green-400">{line.content}</div>
                             ) : (
-                                <div className="text-zinc-300 ml-6 leading-relaxed">{line.content}</div>
+                                <div className="ml-6 leading-relaxed
+                                    text-zinc-700 dark:text-zinc-300">{line.content}</div>
                             )}
                         </div>
                     ))}
                     
                     {/* Active Input Line */}
                     <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-4 text-zinc-300">
-                        <span className="text-fuchsia-500 animate-pulse">➜</span>
-                        <span className="text-cyan-500">~</span>
+                        <span className="animate-pulse text-fuchsia-600 dark:text-fuchsia-500">➜</span>
+                        <span className="text-cyan-600 dark:text-cyan-500">~</span>
                         <input
                             ref={inputRef}
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            className="bg-transparent border-none outline-none text-white w-full font-mono placeholder-zinc-700"
+                            className="bg-transparent border-none outline-none w-full font-mono
+                                text-zinc-900 placeholder-zinc-400
+                                dark:text-white dark:placeholder-zinc-700"
                             placeholder={gameState.active ? "Enter decryption key..." : "Type command..."}
                             spellCheck="false"
                             autoComplete="off"
@@ -290,7 +318,8 @@ const TerminalSection = () => {
             </div>
 
             {/* Decorative Label */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] text-zinc-600 font-mono tracking-widest uppercase flex items-center gap-2">
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono tracking-widest uppercase flex items-center gap-2
+                text-zinc-500 dark:text-zinc-600">
                  <Command size={12} /> Interactive Playground Area
             </div>
         </div>
