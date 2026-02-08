@@ -36,7 +36,7 @@ const CERTIFICATIONS = [
 
 const Certifications = () => {
   return (
-    <section id="certifications" className="py-24 bg-black relative overflow-hidden border-t border-zinc-900">
+    <section id="certifications" className="py-24 bg-gray-50 dark:bg-black relative overflow-hidden border-t border-gray-300 dark:border-zinc-900">
       {/* Background Atmosphere (Matching Projects.jsx) */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(20,20,20,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.5)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10"></div>
@@ -50,7 +50,7 @@ const Certifications = () => {
               <ShieldCheck size={20} className="text-cyan-500" />
               <h2 className="text-sm font-bold font-mono text-cyan-500 uppercase tracking-widest">Authorized Credentials</h2>
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter">
               Licenses & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">Certs</span>
             </h2>
           </div>

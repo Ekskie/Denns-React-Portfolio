@@ -23,7 +23,7 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <section id="testimonials" className="py-24 bg-black relative overflow-hidden">
+    <section id="testimonials" className="py-24 bg-gray-50 dark:bg-black relative overflow-hidden">
       {/* Background Grid & Atmosphere */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.02)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)] pointer-events-none"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-fuchsia-900/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -32,7 +32,7 @@ const Testimonials = () => {
         
         {/* Section Header */}
         <div className="mb-20 text-center relative">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-900/80 border border-zinc-800 rounded-full text-xs font-mono text-cyan-500 uppercase tracking-widest mb-6 backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-gray-200 dark:bg-zinc-900/80 border border-gray-400 dark:border-zinc-800 rounded-full text-xs font-mono text-cyan-600 dark:text-cyan-500 uppercase tracking-widest mb-6 backdrop-blur-sm">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
@@ -40,11 +40,11 @@ const Testimonials = () => {
                 Incoming Transmissions
             </div>
             
-            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4">
+            <h2 className="text-4xl md:text-6xl font-black text-zinc-900 dark:text-white tracking-tighter mb-4">
                 CLIENT <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-500">FEEDBACK</span>
             </h2>
             
-            <div className="flex items-center justify-center gap-4 text-zinc-500 font-mono text-sm">
+            <div className="flex items-center justify-center gap-4 text-gray-500 dark:text-zinc-500 font-mono text-sm">
                 <span>/// DECRYPTING USER LOGS</span>
                 <span className="w-16 h-px bg-zinc-800"></span>
                 <span>VERIFIED SOURCES ONLY</span>

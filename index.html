@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="/denn.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dennrick-AKA-EKSKIE-Portfolio</title>
+    <script>
+      // Initialize theme immediately to prevent flash
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (systemDark ? 'dark' : 'light');
+        
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

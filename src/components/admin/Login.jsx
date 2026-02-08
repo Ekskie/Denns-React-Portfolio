@@ -19,32 +19,32 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <div className="bg-zinc-900 border border-zinc-800 p-8 w-full max-w-md clip-polygon-card relative">
+    <div className="min-h-screen bg-gray-50 dark:bg-black flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-zinc-900 border border-gray-300 dark:border-zinc-800 p-8 w-full max-w-md clip-polygon-card relative">
         <div className="absolute top-0 left-0 w-full h-1 bg-cyan-500"></div>
-        <div className="flex items-center gap-2 mb-6 text-cyan-400 font-mono">
+        <div className="flex items-center gap-2 mb-6 text-cyan-600 dark:text-cyan-400 font-mono">
           <Terminal size={24} />
           <span className="text-xl font-bold tracking-wider">SYSTEM ACCESS</span>
         </div>
         
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-zinc-500 text-xs uppercase tracking-widest mb-2">Identifier</label>
+            <label className="block text-gray-600 dark:text-zinc-500 text-xs uppercase tracking-widest mb-2">Identifier</label>
             <input 
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-black border border-zinc-700 p-3 text-white focus:border-cyan-500 outline-none transition-colors font-mono"
+              className="w-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-zinc-700 p-3 text-zinc-900 dark:text-white focus:border-cyan-600 dark:focus:border-cyan-500 outline-none transition-colors font-mono"
               placeholder="admin@ekskie.com"
             />
           </div>
           <div>
-            <label className="block text-zinc-500 text-xs uppercase tracking-widest mb-2">Passcode</label>
+            <label className="block text-gray-600 dark:text-zinc-500 text-xs uppercase tracking-widest mb-2">Passcode</label>
             <input 
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-black border border-zinc-700 p-3 text-white focus:border-fuchsia-500 outline-none transition-colors font-mono"
+              className="w-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-zinc-700 p-3 text-zinc-900 dark:text-white focus:border-fuchsia-600 dark:focus:border-fuchsia-500 outline-none transition-colors font-mono"
               placeholder="••••••••"
             />
           </div>

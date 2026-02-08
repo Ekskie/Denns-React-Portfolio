@@ -9,6 +9,13 @@ const TerminalSection = () => {
     { type: 'info', content: 'Type "help" to see available commands.' },
   ]);
   
+  // Game State
+  const [gameState, setGameState] = useState({
+    active: false,
+    target: 0,
+    attempts: 0
+  });
+
   const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
   const containerRef = useRef(null);
@@ -45,7 +52,58 @@ const TerminalSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  const handleGameInput = (cmd) => {
+    const command = cmd.trim().toLowerCase();
+
+    // Allow exit
+    if (command === 'exit' || command === 'quit') {
+        setGameState({ active: false, target: 0, attempts: 0 });
+        setOutput(prev => [...prev, 
+            { type: 'command', content: cmd },
+            { type: 'system', content: 'Decryption aborted. Returning to shell...' }
+        ]);
+        return;
+    }
+
+    const guess = parseInt(command);
+    
+    if (isNaN(guess)) {
+        setOutput(prev => [...prev, 
+            { type: 'command', content: cmd },
+            { type: 'error', content: 'Invalid input. Enter a number (0-100) or type "exit".' }
+        ]);
+        return;
+    }
+
+    const newAttempts = gameState.attempts + 1;
+    let response;
+    let type = 'text';
+
+    if (guess === gameState.target) {
+        response = `SUCCESS: Decryption key [${gameState.target}] verified. Firewall bypassed in ${newAttempts} attempts.`;
+        type = 'success';
+        setGameState({ active: false, target: 0, attempts: 0 });
+    } else if (guess < gameState.target) {
+        response = `Error: Key fragment [${guess}] is too LOW. Signal strength weak.`;
+        setGameState(prev => ({ ...prev, attempts: newAttempts }));
+    } else {
+        response = `Error: Key fragment [${guess}] is too HIGH. Signal overload.`;
+        setGameState(prev => ({ ...prev, attempts: newAttempts }));
+    }
+
+    setOutput(prev => [...prev, 
+        { type: 'command', content: cmd },
+        { type: type, content: response }
+    ]);
+  };
+
   const handleCommand = (cmd) => {
+    // Intercept input if game is active
+    if (gameState.active) {
+        handleGameInput(cmd);
+        return;
+    }
+
     const command = cmd.trim().toLowerCase();
     let response = null;
     let type = 'text';
@@ -98,8 +156,16 @@ const TerminalSection = () => {
         }, 800);
         break;
       case 'play game':
-        response = "Error: GPU resources occupied by awesome portfolio. Try playing 'hide and seek' with the source code instead.";
-        type = 'error';
+      case 'game':
+        const target = Math.floor(Math.random() * 100) + 1;
+        setGameState({ active: true, target: target, attempts: 0 });
+        response = (
+            <div className="text-fuchsia-300">
+                <p>⚠️ SECURITY PROTOCOL INITIATED</p>
+                <p>Firewall detected. To bypass, you must guess the decryption key (Number between 1-100).</p>
+                <p className="mt-1 text-zinc-500 text-xs">Type 'exit' to quit anytime.</p>
+            </div>
+        );
         break;
       case 'clear':
         setOutput([]);
@@ -197,6 +263,8 @@ const TerminalSection = () => {
                                 <div className="text-zinc-400 italic mb-2">{line.content}</div>
                             ) : line.type === 'error' ? (
                                 <div className="text-red-400 bg-red-900/10 inline-block px-2 py-0.5 rounded border border-red-900/30">{line.content}</div>
+                            ) : line.type === 'success' ? (
+                                <div className="text-green-400 font-bold ml-6">{line.content}</div>
                             ) : (
                                 <div className="text-zinc-300 ml-6 leading-relaxed">{line.content}</div>
                             )}
@@ -213,7 +281,7 @@ const TerminalSection = () => {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             className="bg-transparent border-none outline-none text-white w-full font-mono placeholder-zinc-700"
-                            placeholder="Type command..."
+                            placeholder={gameState.active ? "Enter decryption key..." : "Type command..."}
                             spellCheck="false"
                             autoComplete="off"
                         />

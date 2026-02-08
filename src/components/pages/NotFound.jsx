@@ -6,7 +6,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center relative overflow-hidden font-mono selection:bg-red-500/30">
+    <div className="min-h-screen bg-gray-50 dark:bg-black text-zinc-900 dark:text-white flex flex-col items-center justify-center relative overflow-hidden font-mono selection:bg-red-500/30">
       
       {/* 1. Background Scanlines & Noise */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-0 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20"></div>
@@ -16,7 +16,7 @@ const NotFound = () => {
          
          {/* 2. Glitch 404 Title */}
          <div className="relative mb-12">
-            <h1 className="text-9xl md:text-[12rem] font-black text-white tracking-tighter relative z-10 leading-none">
+            <h1 className="text-9xl md:text-[12rem] font-black text-zinc-900 dark:text-white tracking-tighter relative z-10 leading-none">
                 4<span className="text-red-600 animate-pulse">0</span>4
             </h1>
             <div className="absolute inset-0 text-9xl md:text-[12rem] font-black text-cyan-500 opacity-40 blur-[2px] animate-glitch-1 leading-none">404</div>
@@ -28,21 +28,21 @@ const NotFound = () => {
          </div>
 
          {/* 3. Terminal Error Log */}
-         <div className="bg-zinc-950/80 border border-zinc-800 p-6 rounded-lg backdrop-blur-md text-left shadow-[0_0_50px_rgba(220,38,38,0.1)] relative overflow-hidden group">
+         <div className="bg-white/80 dark:bg-zinc-950/80 border border-gray-300 dark:border-zinc-800 p-6 rounded-lg backdrop-blur-md text-left shadow-[0_0_50px_rgba(220,38,38,0.1)] relative overflow-hidden group">
             {/* Red alert bar at top */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-600 to-transparent"></div>
             
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-4 mb-4">
+            <div className="flex items-center justify-between border-b border-gray-300 dark:border-zinc-800 pb-4 mb-4">
                 <div className="flex items-center gap-2">
-                    <Terminal size={16} className="text-zinc-500" />
-                    <span className="text-xs text-zinc-500 font-mono">ERROR_LOG_DUMP</span>
+                    <Terminal size={16} className="text-gray-500 dark:text-zinc-500" />
+                    <span className="text-xs text-gray-500 dark:text-zinc-500 font-mono">ERROR_LOG_DUMP</span>
                 </div>
                 <div className="flex gap-1.5">
                     <div className="w-2 h-2 rounded-full bg-red-500 animate-ping"></div>
                 </div>
             </div>
 
-            <div className="space-y-2 text-xs md:text-sm font-mono text-zinc-400">
+            <div className="space-y-2 text-xs md:text-sm font-mono text-gray-600 dark:text-zinc-400">
                 <p> <span className="text-zinc-600">{'>'}</span> Initiating nav_sequence.exe...</p>
                 <p> <span className="text-zinc-600">{'>'}</span> Target coordinates unavailable.</p>
                 <p> <span className="text-zinc-600">{'>'}</span> <span className="text-red-400">CRITICAL ERROR: Vector not found in local sector.</span></p>

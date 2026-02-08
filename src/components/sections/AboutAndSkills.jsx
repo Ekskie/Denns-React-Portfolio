@@ -4,10 +4,10 @@ import { TECH_STACK } from '../../data/mockData';
 
 const AboutAndSkills = () => {
   return (
-    <section id="about" className="py-24 bg-zinc-950 relative overflow-hidden">
+    <section id="about" className="py-24 bg-gray-100 dark:bg-zinc-950 relative overflow-hidden">
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-fuchsia-900/10 to-transparent pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-900/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-fuchsia-100/50 dark:from-fuchsia-900/10 to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-100/50 dark:bg-cyan-900/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-16 items-start">
@@ -15,19 +15,19 @@ const AboutAndSkills = () => {
           {/* Character Bio */}
           <div className="relative">
             <div className="absolute -left-4 top-0 w-1 h-20 bg-cyan-500"></div>
-            <h2 className="text-sm font-bold font-mono text-cyan-500 uppercase tracking-widest mb-2 ml-4">About Me</h2>
-            <h3 className="text-4xl md:text-6xl font-black text-white mb-8 ml-4">
+            <h2 className="text-sm font-bold font-mono text-cyan-600 dark:text-cyan-500 uppercase tracking-widest mb-2 ml-4">About Me</h2>
+            <h3 className="text-4xl md:text-6xl font-black text-zinc-900 dark:text-white mb-8 ml-4">
               CREATIVE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">TECHNOLOGIST</span>
             </h3>
             
-            <div className="bg-zinc-900/50 border border-zinc-800 p-8 clip-polygon-card backdrop-blur-sm relative">
+            <div className="bg-white/50 dark:bg-zinc-900/50 border border-gray-300 dark:border-zinc-800 p-8 clip-polygon-card backdrop-blur-sm relative">
               {/* Corner Accents */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-500"></div>
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-600 dark:border-cyan-500"></div>
               <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-fuchsia-500"></div>
 
-              <div className="prose prose-invert text-gray-400 leading-relaxed space-y-4 font-mono text-sm md:text-base">
+              <div className="prose dark:prose-invert text-gray-700 dark:text-gray-400 leading-relaxed space-y-4 font-mono text-sm md:text-base">
                 <p>
-                  I am a passionate developer who bridges the gap between <strong className="text-white">logic and creativity</strong>. 
+                  I am a passionate developer who bridges the gap between <strong className="text-zinc-900 dark:text-white">logic and creativity</strong>. 
                   I design, code, and create game art to build immersive digital experiences.
                 </p>
                 <p>

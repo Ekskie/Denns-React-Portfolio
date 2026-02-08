@@ -1,21 +1,32 @@
 @import "tailwindcss";
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    /* Base Layout Reset */
+    @apply m-0 min-w-[320px] min-h-screen overflow-x-hidden;
+
+    /* Theme Transition */
+    @apply transition-colors duration-300 ease-in-out;
+
+    /* Light Mode Defaults */
+    @apply bg-gray-50 text-zinc-900;
+
+    /* Dark Mode Defaults (using your zinc-950 hex) */
+    @apply dark:bg-[#09090b] dark:text-white;
+  }
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #09090b; /* zinc-950 */
-  overflow-x: hidden;
-}
-
 /* Global Cursor Reset 
-  Forces the system cursor to be hidden on all interactable elements 
-  when on a device that supports hover (desktop).
+   Forces the system cursor to be hidden on all interactable elements 
+   when on a device that supports hover (desktop).
 */
 @media (hover: hover) and (pointer: fine) {
   html, body, #root, * {
@@ -28,22 +39,48 @@ body {
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Cyberpunk / Modern Design */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #18181b; 
+  background-color: #f3f4f6;
+  border-left: 1px solid #e5e7eb;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46; 
-  border-radius: 4px;
+  background-color: #a1a5ab;
+  border: 2px solid #f3f4f6;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease-in-out;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #71717a; 
+  background-color: #06b6d4;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #0891b2;
+}
+
+/* Dark Mode Scrollbar */
+html.dark ::-webkit-scrollbar-track {
+  background-color: #050505;
+  border-left: 1px solid #18181b;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background-color: #3f3f46;
+  border-color: #050505;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #06b6d4;
+}
+
+html.dark ::-webkit-scrollbar-thumb:active {
+  background-color: #155e75;
 }
 
 /* Clip Paths */

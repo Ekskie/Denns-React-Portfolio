@@ -33,7 +33,7 @@ const Projects = () => {
     : projects.filter(p => p.category.includes(filter) || (filter === 'Game/App' && (p.category.includes('Game') || p.category.includes('3D'))));
 
   return (
-    <section id="projects" className="py-24 bg-black relative overflow-hidden">
+    <section id="projects" className="py-24 bg-gray-50 dark:bg-black relative overflow-hidden">
       {/* Background Atmosphere */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(20,20,20,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.5)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10"></div>
@@ -51,7 +51,7 @@ const Projects = () => {
               <Layers size={20} className="text-cyan-500" />
               <h2 className="text-sm font-bold font-mono text-cyan-500 uppercase tracking-widest">System Worklog</h2>
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter">
               Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">Works</span>
             </h2>
           </div>

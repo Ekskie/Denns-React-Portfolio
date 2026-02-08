@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext.jsx';
 
 // Public Components
-// Using standard relative paths for files in src directory
 import NavBar from './components/layout/NavBar.jsx';
 import Footer from './components/layout/Footer.jsx';
 import ScanlineOverlay from './components/layout/ScanlineOverlay.jsx';
@@ -23,11 +23,8 @@ import Dashboard from './components/admin/Dashboard.jsx';
 // UI Components
 import CustomCursor from './components/ui/CustomCursor.jsx';
 
-// Styles
-import { globalStyles } from './styles/globals.js';
-
 const PublicPortfolio = () => (
-  <div className="bg-black min-h-screen text-white font-sans selection:bg-fuchsia-500/30 selection:text-fuchsia-200">
+  <div className="min-h-screen font-sans transition-colors duration-300 bg-gray-50 text-zinc-900 dark:bg-black dark:text-white selection:bg-cyan-200 selection:text-cyan-900 dark:selection:bg-fuchsia-500/30 dark:selection:text-fuchsia-200">
     <ScanlineOverlay />
     <NavBar />
     <main>
@@ -49,20 +46,19 @@ export default function App() {
     // Simulate initial loading for assets
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <>
-      <style>{globalStyles}</style>
+    <ThemeProvider>
       <CustomCursor />
       
       {loading ? (
-        <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-50 dark:bg-black flex items-center justify-center z-50 transition-colors duration-300">
           <div className="text-center">
             <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <div className="font-mono text-cyan-500 animate-pulse">INITIALIZING SYSTEM...</div>
+            <div className="font-mono text-cyan-600 dark:text-cyan-500 animate-pulse">INITIALIZING SYSTEM...</div>
           </div>
         </div>
       ) : (
@@ -80,6 +76,6 @@ export default function App() {
             </Routes>
         </Router>
       )}
-    </>
+    </ThemeProvider>
   );
 }
