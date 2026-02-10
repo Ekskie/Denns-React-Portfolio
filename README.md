@@ -84,7 +84,7 @@ src/
 ├── lib/             # Supabase client configuration
 └── styles/          # Global styles
 ```
-🔐 Admin Access
+## 🔐 Admin Access
 To access the Content Management System:
 
 Navigate to /admin.
@@ -93,14 +93,8 @@ Log in using your Supabase authenticated credentials.
 
 Use the dashboard to Add/Edit/Delete projects and testimonials without touching the code.
 
-📄 License
+## 📄 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-<p align="center"> Built with 💻 and ☕ by Denn </p>
+# <p align="center"> Built with 💻 and ☕ by Denn </p>
 
-
-### Changes from your previous version:
-
-1.  **Added "Zen Mode":** Your `App.jsx` specifically checks for `zenMode` to hide `<ScanlineOverlay />` and `<CustomCursor />`, so I highlighted this as a feature.
-2.  **Updated Dependencies:** Updated the Tech Stack to reflect `React 19` and `Tailwind v4` as seen in your `package.json`.
-3.  **Badges:** Added visual badges at the top for a professional look.
