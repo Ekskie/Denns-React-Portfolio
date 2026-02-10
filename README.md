@@ -83,7 +83,7 @@ src/
 ├── context/         # ThemeContext (Zen Mode logic)
 ├── lib/             # Supabase client configuration
 └── styles/          # Global styles
-
+```
 🔐 Admin Access
 To access the Content Management System:
 
