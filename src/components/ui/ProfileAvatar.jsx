@@ -39,8 +39,7 @@ const ProfileAvatar = () => (
       <img 
         src="/denn.png"
         alt="Dennrick Agustin" 
-        className="w-full h-full object-cover transition-all duration-700 scale-110 group-hover:scale-100
-          grayscale group-hover:grayscale-0"
+        className="w-full h-full object-cover transition-all duration-700 scale-110 group-hover:scale-100"
       />
     </div>
 

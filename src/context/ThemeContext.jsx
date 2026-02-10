@@ -3,28 +3,33 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  // Initialize state based on localStorage or System Preference
+  // Initialize theme state based on localStorage or System Preference
   const [theme, setTheme] = useState(() => {
-    // Check if running in browser
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme');
-      // If user has a saved preference, use it
       if (savedTheme) {
         return savedTheme;
       }
-      // Otherwise check system preference
       if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return 'dark';
       }
     }
-    // Default fallback
-    return 'light';
+    return 'light'; // Default
   });
 
+  // Initialize Zen Mode state (for reduced motion)
+  const [zenMode, setZenMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('zenMode') === 'true';
+    }
+    return false;
+  });
+
+  // Handle Theme Side Effects
   useEffect(() => {
     const root = window.document.documentElement;
     
-    // Remove the old theme class and add the new one
+    // Remove old classes and add new one
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
 
@@ -32,12 +37,21 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // Handle Zen Mode Side Effects
+  useEffect(() => {
+    localStorage.setItem('zenMode', zenMode);
+  }, [zenMode]);
+
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
+  const toggleZenMode = () => {
+    setZenMode((prev) => !prev);
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, zenMode, toggleZenMode }}>
       {children}
     </ThemeContext.Provider>
   );

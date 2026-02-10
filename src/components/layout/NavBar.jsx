@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Gamepad2, Menu, X, FileText, Download, Sun, Moon } from 'lucide-react';
+import { Gamepad2, Menu, X, FileText, Download, Sun, Moon, Eye, EyeOff } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext.jsx';
 
 const NavBar = () => {
-  const { theme, toggleTheme } = useTheme();
+  // Destructure zenMode and toggleZenMode from the context
+  const { theme, toggleTheme, zenMode, toggleZenMode } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -80,6 +81,15 @@ const NavBar = () => {
             ))}
           </div>
 
+          {/* Zen Mode Toggle (New) */}
+          <button
+            onClick={toggleZenMode}
+            className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 mr-1"
+            title={zenMode ? "Enable Animations" : "Zen Mode (Reduced Motion)"}
+          >
+            {zenMode ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
@@ -129,6 +139,14 @@ const NavBar = () => {
                 {`> ${link.name}`}
               </a>
             ))}
+
+            {/* Mobile Zen Toggle */}
+            <button
+                onClick={toggleZenMode}
+                className="flex items-center gap-2 text-lg font-mono text-zinc-600 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 uppercase border-l-2 border-transparent hover:border-cyan-500 pl-3 transition-all text-left"
+            >
+                {zenMode ? <><EyeOff size={20} /> Animations Off</> : <><Eye size={20} /> Animations On</>}
+            </button>
 
             <button
                 onClick={toggleTheme}

@@ -36,19 +36,13 @@ const Projects = () => {
     <section id="projects" className="py-24 relative overflow-hidden transition-colors duration-500
       bg-zinc-50 dark:bg-black">
       
-      {/* Background Atmosphere - Grid Pattern 
-          Light: Subtle gray grid
-          Dark: Subtle dark gray grid
-      */}
+      {/* Background Atmosphere - Grid Pattern */}
       <div className="absolute inset-0 bg-[size:40px_40px] pointer-events-none opacity-30
         bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)]
         dark:bg-[linear-gradient(rgba(20,20,20,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.5)_1px,transparent_1px)]">
       </div>
       
-      {/* Top Gradient Fade (The specific fix for "unsettling black") 
-          Light: Fade from Zinc-50 (White-ish)
-          Dark: Fade from Black
-      */}
+      {/* Top Gradient Fade */}
       <div className="absolute top-0 left-0 w-full h-32 z-10
         bg-gradient-to-b from-zinc-50 to-transparent
         dark:from-black dark:to-transparent">
@@ -94,11 +88,11 @@ const Projects = () => {
                 key={cat.id}
                 onClick={() => setFilter(cat.id)}
                 className={`
-                    relative px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-md flex items-center gap-2 transition-all duration-300
-                    ${filter === cat.id 
-                      ? 'bg-zinc-100 text-zinc-900 shadow-sm border border-zinc-300 dark:bg-zinc-800 dark:text-white dark:shadow-lg dark:border-zinc-700' 
-                      : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800/50'
-                    }
+                  relative px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-md flex items-center gap-2 transition-all duration-300
+                  ${filter === cat.id 
+                    ? 'bg-zinc-100 text-zinc-900 shadow-sm border border-zinc-300 dark:bg-zinc-800 dark:text-white dark:shadow-lg dark:border-zinc-700' 
+                    : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800/50'
+                  }
                 `}
               >
                 <cat.icon size={14} className={filter === cat.id ? 'text-cyan-600 dark:text-cyan-400' : 'text-zinc-400 dark:text-zinc-600'} />
