@@ -1,110 +1,143 @@
 @import "tailwindcss";
 
-
+/* Enable class-based dark mode */
 @variant dark (&:where(.dark, .dark *));
 
+/* =========================
+   BASE LAYER
+========================= */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-      @apply transition-colors duration-300 ease-in-out;
-    @apply bg-white text-gray-900; 
-    /* Base Layout Reset */
+    /* Layout Reset */
     @apply m-0 min-w-[320px] min-h-screen overflow-x-hidden;
-
-    /* Theme Transition */
-    @apply transition-colors duration-300 ease-in-out;
 
     /* Light Mode Defaults */
     @apply bg-gray-50 text-zinc-900;
 
-    /* Dark Mode Defaults (using your zinc-950 hex) */
+    /* Dark Mode Defaults */
     @apply dark:bg-[#09090b] dark:text-white;
+
+    /* Theme Transitions */
+    @apply transition-colors duration-300 ease-in-out;
   }
-}
-.dark body {
-  @apply bg-gray-900 text-white;
-}
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-/* Global Cursor Reset 
-   Forces the system cursor to be hidden on all interactable elements 
-   when on a device that supports hover (desktop).
-*/
+/* =========================
+   GLOBAL CURSOR CONTROL
+   (Opt-in via .cursor-hidden)
+========================= */
 @media (hover: hover) and (pointer: fine) {
-  html, body, #root, * {
+  html.cursor-hidden * {
     cursor: none !important;
   }
-  
-  /* Re-enable default cursor for iframes if needed, or specific exclusions */
+
   iframe {
     cursor: auto !important;
   }
 }
 
-/* Custom Scrollbar - Cyberpunk / Modern Design */
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html.cursor-hidden * {
+    cursor: auto !important;
+  }
+}
+
+/* =========================
+   SCROLLBAR THEME
+========================= */
+:root {
+  --scrollbar-track: #f3f4f6;
+  --scrollbar-thumb: #a1a5ab;
+  --scrollbar-thumb-hover: #06b6d4;
+  --scrollbar-thumb-active: #0891b2;
+}
+
+html.dark {
+  --scrollbar-track: #050505;
+  --scrollbar-thumb: #3f3f46;
+  --scrollbar-thumb-hover: #06b6d4;
+  --scrollbar-thumb-active: #155e75;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* WebKit */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #f3f4f6;
-  border-left: 1px solid #e5e7eb;
+  background-color: var(--scrollbar-track);
+  border-inline-start: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #a1a5ab;
-  border: 2px solid #f3f4f6;
+  background-color: var(--scrollbar-thumb);
+  border: 2px solid var(--scrollbar-track);
   border-radius: 9999px;
   transition: background-color 0.2s ease-in-out;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #06b6d4;
+  background-color: var(--scrollbar-thumb-hover);
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background-color: #0891b2;
+  background-color: var(--scrollbar-thumb-active);
 }
 
-/* Dark Mode Scrollbar */
-html.dark ::-webkit-scrollbar-track {
-  background-color: #050505;
-  border-left: 1px solid #18181b;
-}
-
-html.dark ::-webkit-scrollbar-thumb {
-  background-color: #3f3f46;
-  border-color: #050505;
-}
-
-html.dark ::-webkit-scrollbar-thumb:hover {
-  background-color: #06b6d4;
-}
-
-html.dark ::-webkit-scrollbar-thumb:active {
-  background-color: #155e75;
-}
-
-/* Clip Paths */
+/* =========================
+   CLIP PATH UTILITIES
+========================= */
 .clip-polygon {
-  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  border-radius: 0.5rem;
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
 }
 
 .clip-polygon-card {
-  clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+  border-radius: 1rem;
+  clip-path: polygon(
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%,
+    0 20px
+  );
 }
 
-/* Glitch Animation Keyframes */
+/* =========================
+   GLITCH ANIMATION
+========================= */
 @keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
+  0%   { transform: translate(0); }
+  20%  { transform: translate(-2px, 2px); }
+  40%  { transform: translate(-2px, -2px); }
+  60%  { transform: translate(2px, 2px); }
+  80%  { transform: translate(2px, -2px); }
   100% { transform: translate(0); }
+}
+
+/* Disable glitch for reduced motion users */
+@media (prefers-reduced-motion: reduce) {
+  .glitch,
+  [class*="glitch"] {
+    animation: none !important;
+  }
 }
