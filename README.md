@@ -1,100 +1,106 @@
-👨‍💻 Denn's Cyberpunk Portfolio
+# 👨‍💻 Denn's Cyberpunk Portfolio
 
-A high-performance, immersive personal portfolio website featuring a unique Cyberpunk/Terminal aesthetic. Built with React, Vite, and Supabase.
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
-✨ Features
+A high-performance, immersive personal portfolio website featuring a unique **Cyberpunk/Terminal aesthetic**. Built with React, Vite, and Supabase, this portfolio combines visual flair with a robust content management system.
 
-Cyberpunk Aesthetic: Custom "glitch" text effects, scanline overlays, and a terminal-style command interface.
+---
 
-Interactive UI: Custom cursor, smooth scrolling, and reactive animations using Framer Motion.
+## ✨ Key Features
 
-Admin Dashboard: A secured admin area (/admin) to manage projects and testimonials dynamically.
+* **Cyberpunk Aesthetic:** Immersive UI with custom "glitch" text effects, scanline overlays, and terminal-style command interfaces.
+* **🧘 Zen Mode:** A distraction-free viewing option that toggles off scanlines and custom cursors for better readability (managed via `ThemeContext`).
+* **Interactive UI:** Includes a custom cursor, scroll progress indicators, and smooth transitions.
+* **Admin Dashboard:** A secured route (`/admin`) for managing portfolio projects and testimonials dynamically.
+* **Real-time Backend:** Fully integrated with **Supabase** for database storage and authentication.
+* **Responsive Design:** Mobile-first layout styled with **Tailwind CSS**.
 
-Real-time Backend: Integrated with Supabase for data storage and authentication.
+---
 
-Responsive Design: Fully responsive layout built with Tailwind CSS.
+## 🛠️ Tech Stack
 
-Dark/Light Mode: (If applicable based on ThemeContext) or Thematic consistency.
+* **Frontend Framework:** React 19 + Vite
+* **Styling:** Tailwind CSS v4
+* **Icons:** Lucide React
+* **Routing:** React Router DOM v7
+* **Backend & Auth:** Supabase (PostgreSQL)
+* **Linting:** ESLint
 
-🛠️ Tech Stack
+---
 
-Frontend: React.js, Vite
-
-Styling: Tailwind CSS
-
-Animations: Framer Motion
-
-Icons: Lucide React
-
-Backend/DB: Supabase (PostgreSQL)
-
-Routing: React Router DOM
-
-Deployment: Vercel
-
-🚀 Getting Started
+## 🚀 Getting Started
 
 Follow these steps to set up the project locally.
 
-Prerequisites
+### Prerequisites
 
-Node.js (v18 or higher recommended)
+* **Node.js** (v18 or higher recommended)
+* **npm** or **yarn**
 
-npm or yarn
+### Installation
 
-Installation
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/yourusername/denns-react-portfolio.git](https://github.com/yourusername/denns-react-portfolio.git)
+    cd denns-react-portfolio
+    ```
 
-Clone the repository
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-git clone [https://github.com/yourusername/denns-react-portfolio.git](https://github.com/yourusername/denns-react-portfolio.git)
-cd denns-react-portfolio
+3.  **Configure Environment Variables**
+    Create a `.env` file in the root directory and add your Supabase credentials.
+    ```env
+    VITE_SUPABASE_URL=your_supabase_project_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
 
+4.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
 
-Install dependencies
+5.  **Open the app**
+    Navigate to `http://localhost:5173` in your browser.
 
-npm install
+---
 
+## 📂 Project Structure
 
-Configure Environment Variables
-Create a .env file in the root directory and add your Supabase credentials. You can find these in your Supabase project settings.
-
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-
-Run the development server
-
-npm run dev
-
-
-Open your browser
-Navigate to http://localhost:5173 to view the application.
-
-📂 Project Structure
-
+```text
 src/
 ├── components/
-│   ├── admin/       # Dashboard, Login, and Forms
-│   ├── layout/      # Navbar, Footer, Overlays
-│   ├── pages/       # Main page views (Legal, 404, etc.)
-│   ├── sections/    # Homepage sections (Hero, Projects, etc.)
-│   └── ui/          # Reusable UI components (GlitchText, Cards)
-├── context/         # React Context (Theme)
-├── data/            # Mock data and constants
-├── hooks/           # Custom hooks (useMousePosition)
+│   ├── admin/       # Dashboard, Login, and Management Forms
+│   ├── layout/      # Navbar, Footer, ScanlineOverlay
+│   ├── pages/       # Public views (Legal, NotFound, Privacy)
+│   ├── sections/    # Homepage sections (Hero, Projects, Terminal)
+│   └── ui/          # Reusable UI (GlitchText, CustomCursor, ScrollProgress)
+├── context/         # ThemeContext (Zen Mode logic)
 ├── lib/             # Supabase client configuration
 └── styles/          # Global styles
 
-
 🔐 Admin Access
+To access the Content Management System:
 
-To access the admin dashboard, navigate to /admin.
-Note: You will need to set up Authentication in your Supabase project and create an authorized user.
+Navigate to /admin.
+
+Log in using your Supabase authenticated credentials.
+
+Use the dashboard to Add/Edit/Delete projects and testimonials without touching the code.
 
 📄 License
-
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-<p align="center">
-Built with 💻 and ☕ by Denn
-</p>
+<p align="center"> Built with 💻 and ☕ by Denn </p>
+
+
+### Changes from your previous version:
+
+1.  **Added "Zen Mode":** Your `App.jsx` specifically checks for `zenMode` to hide `<ScanlineOverlay />` and `<CustomCursor />`, so I highlighted this as a feature.
+2.  **Updated Dependencies:** Updated the Tech Stack to reflect `React 19` and `Tailwind v4` as seen in your `package.json`.
+3.  **Badges:** Added visual badges at the top for a professional look.
