@@ -11,7 +11,7 @@ const Testimonials = () => {
       const { data, error } = await supabase
         .from('testimonials')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: true });
 
       if (!error) {
         setTestimonials(data);
