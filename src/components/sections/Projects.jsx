@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layers, Code, Gamepad2, PenTool, Filter } from 'lucide-react';
+import { Layers, Code, Gamepad2, PenTool, Filter, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient.js'; 
 import ProjectCard from '../ui/ProjectCard.jsx';
 
@@ -7,6 +7,11 @@ const Projects = () => {
   const [filter, setFilter] = useState('All');
   const [projects, setProjects] = useState([]); 
   const [loading, setLoading] = useState(true);
+
+  // Pagination State
+  const INITIAL_COUNT = 6;
+  const LOAD_INCREMENT = 6;
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
   // Fetch data on load
   useEffect(() => {
@@ -31,6 +36,26 @@ const Projects = () => {
   const filteredProjects = filter === 'All' 
     ? projects 
     : projects.filter(p => p.category.includes(filter) || (filter === 'Game/App' && (p.category.includes('Game') || p.category.includes('3D'))));
+
+  // Slice projects for display
+  const displayedProjects = filteredProjects.slice(0, visibleCount);
+
+  // Reset pagination when filter changes
+  useEffect(() => {
+    setVisibleCount(INITIAL_COUNT);
+  }, [filter]);
+
+  const handleShowMore = () => {
+    setVisibleCount(prev => prev + LOAD_INCREMENT);
+  };
+
+  const handleShowLess = () => {
+    setVisibleCount(INITIAL_COUNT);
+    const section = document.getElementById('projects');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section id="projects" className="py-24 relative overflow-hidden transition-colors duration-500
@@ -115,6 +140,8 @@ const Projects = () => {
             <span>Filter Active: {filter}</span>
             <span className="text-zinc-300 dark:text-zinc-800">|</span>
             <span>Count: {filteredProjects.length}</span>
+            <span className="text-zinc-300 dark:text-zinc-800">|</span>
+            <span>Showing: {displayedProjects.length}</span>
         </div>
 
         {/* Loading State */}
@@ -131,26 +158,66 @@ const Projects = () => {
                </div>
             </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map(project => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-            
-            {!loading && filteredProjects.length === 0 && (
-                <div className="col-span-full h-48 flex flex-col items-center justify-center border border-dashed rounded-xl
-                  border-zinc-300
-                  dark:border-zinc-800">
-                    <div className="font-mono
-                      text-zinc-500">
-                      NO ENTRIES FOUND FOR FILTER: "{filter}"
-                    </div>
-                    <button onClick={() => setFilter('All')} className="text-sm mt-2 hover:underline
-                      text-cyan-600 dark:text-cyan-500">
-                      RESET PROTOCOLS
-                    </button>
-                </div>
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {displayedProjects.map(project => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+              
+              {!loading && filteredProjects.length === 0 && (
+                  <div className="col-span-full h-48 flex flex-col items-center justify-center border border-dashed rounded-xl
+                    border-zinc-300
+                    dark:border-zinc-800">
+                      <div className="font-mono
+                        text-zinc-500">
+                        NO ENTRIES FOUND FOR FILTER: "{filter}"
+                      </div>
+                      <button onClick={() => setFilter('All')} className="text-sm mt-2 hover:underline
+                        text-cyan-600 dark:text-cyan-500">
+                        RESET PROTOCOLS
+                      </button>
+                  </div>
+              )}
+            </div>
+
+            {/* Pagination Controls */}
+            {(visibleCount < filteredProjects.length || visibleCount > INITIAL_COUNT) && filteredProjects.length > 0 && (
+              <div className="mt-16 flex flex-wrap justify-center gap-4">
+                
+                {/* Load More Button */}
+                {visibleCount < filteredProjects.length && (
+                  <button
+                    onClick={handleShowMore}
+                    className="group inline-flex items-center gap-2 px-8 py-3 rounded-full 
+                      bg-white border border-zinc-200 text-zinc-700 shadow-sm
+                      hover:border-cyan-500 hover:text-cyan-600
+                      dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-300
+                      dark:hover:border-cyan-500 dark:hover:text-cyan-400
+                      transition-all duration-300"
+                  >
+                    <span className="font-medium tracking-wide">LOAD MORE PROJECTS</span>
+                    <ChevronDown size={18} className="group-hover:translate-y-0.5 transition-transform" />
+                  </button>
+                )}
+
+                {/* Show Less Button */}
+                {visibleCount > INITIAL_COUNT && (
+                  <button
+                    onClick={handleShowLess}
+                    className="group inline-flex items-center gap-2 px-8 py-3 rounded-full 
+                      bg-white border border-zinc-200 text-zinc-700 shadow-sm
+                      hover:border-fuchsia-500 hover:text-fuchsia-600
+                      dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-300
+                      dark:hover:border-fuchsia-500 dark:hover:text-fuchsia-400
+                      transition-all duration-300"
+                  >
+                    <span className="font-medium tracking-wide">SHOW LESS</span>
+                    <ChevronUp size={18} className="group-hover:-translate-y-0.5 transition-transform" />
+                  </button>
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </section>
