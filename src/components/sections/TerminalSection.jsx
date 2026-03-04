@@ -159,7 +159,7 @@ const TerminalSection = () => {
         break;
       case 'play game':
       case 'game':
-        const target = Math.floor(Math.random() * 100) + 1;
+        { const target = Math.floor(Math.random() * 100) + 1;
         setGameState({ active: true, target: target, attempts: 0 });
         response = (
             <div className="text-fuchsia-600 dark:text-fuchsia-300">
@@ -168,7 +168,7 @@ const TerminalSection = () => {
                 <p className="mt-1 text-zinc-500 dark:text-zinc-500 text-xs">Type 'exit' to quit anytime.</p>
             </div>
         );
-        break;
+        break; }
       case 'clear':
         setOutput([]);
         return;

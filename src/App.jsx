@@ -26,6 +26,7 @@ import Dashboard from './components/admin/Dashboard.jsx';
 // UI Components
 import CustomCursor from './components/ui/CustomCursor.jsx';
 import ScrollProgress from './components/ui/ScrollProgress.jsx';
+import ScrollToTop from './components/ui/ScrollToTop.jsx';
 
 // Inner component for the public portfolio layout
 // Now uses useTheme to check for Zen Mode
@@ -35,6 +36,7 @@ const PublicPortfolio = () => {
   return (
     <div className="min-h-screen font-sans transition-colors duration-300 bg-gray-50 text-zinc-900 dark:bg-black dark:text-white selection:bg-cyan-200 selection:text-cyan-900 dark:selection:bg-fuchsia-500/30 dark:selection:text-fuchsia-200">
       <ScrollProgress />
+      <ScrollToTop />
       {/* Conditionally render Scanlines based on Zen Mode */}
       {!zenMode && <ScanlineOverlay />}
       <NavBar />
@@ -58,10 +60,10 @@ const AppContent = () => {
   const { zenMode } = useTheme();
 
   useEffect(() => {
-    // Simulate initial loading for assets
+    // Minimal loading delay — just enough for fonts/context to settle
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 100);
     return () => clearTimeout(timer);
   }, []);
 

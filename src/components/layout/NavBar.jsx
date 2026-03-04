@@ -85,6 +85,7 @@ const NavBar = () => {
           <button
             onClick={toggleZenMode}
             className="p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 mr-1"
+            aria-label={zenMode ? "Enable Animations" : "Zen Mode (Reduced Motion)"}
             title={zenMode ? "Enable Animations" : "Zen Mode (Reduced Motion)"}
           >
             {zenMode ? <EyeOff size={18} /> : <Eye size={18} />}

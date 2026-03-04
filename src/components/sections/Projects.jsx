@@ -42,6 +42,7 @@ const Projects = () => {
 
   // Reset pagination when filter changes
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setVisibleCount(INITIAL_COUNT);
   }, [filter]);
 

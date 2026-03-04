@@ -1,5 +1,5 @@
 import React from 'react';
-
+import HeroScanner from '../ui/HeroScanner';
 const ProfileAvatar = () => (
   <div className="relative w-48 h-48 md:w-64 md:h-64 mb-8 group perspective-[1000px]">
     {/* Rotating Outer Rings 
@@ -19,6 +19,7 @@ const ProfileAvatar = () => (
         Light: White/Zinc clean look
         Dark: Black/Zinc dark look
     */}
+    
     <div className="relative w-full h-full rounded-full overflow-hidden border-2 transition-all duration-500
       bg-zinc-100 border-zinc-200 shadow-[0_0_20px_rgba(0,0,0,0.1)]
       dark:bg-zinc-900 dark:border-zinc-800 dark:shadow-[0_0_20px_rgba(0,0,0,0.5)]
@@ -36,11 +37,13 @@ const ProfileAvatar = () => (
       </div>
 
       {/* THE IMAGE SLOT: Replace the src below with your actual image path */}
+
       <img 
         src="/denn.png"
         alt="Dennrick Agustin" 
         className="w-full h-full object-cover transition-all duration-700 scale-110 group-hover:scale-100"
       />
+    <HeroScanner />
     </div>
 
     {/* Decorative Badge 

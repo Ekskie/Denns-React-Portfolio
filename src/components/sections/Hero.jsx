@@ -24,6 +24,7 @@ const useTypewriter = (words, speed = 100, pause = 2000) => {
     }
 
     if (subIndex === 0 && isDeleting) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsDeleting(false);
       setIndex((prev) => (prev + 1) % words.length);
       return;
@@ -307,7 +308,7 @@ const Hero = () => {
           
           <h1 className="text-6xl md:text-9xl font-black tracking-tighter text-transparent bg-clip-text leading-[0.9] animate-text-shine bg-[length:200%_auto] 
             drop-shadow-[0_0_15px_rgba(6,182,212,0.25)] dark:drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]
-            bg-gradient-to-r from-cyan-600 via-zinc-800 to-fuchsia-600 
+            bg-gradient-to-r from-cyan-500 via-sky-400 to-fuchsia-500 
             dark:from-cyan-400 dark:via-white dark:to-fuchsia-500">
             AGUSTIN
           </h1>
@@ -340,9 +341,10 @@ const Hero = () => {
           </a>
           <a 
             href="#contact"
-            className="group w-full md:w-auto px-8 py-4 bg-transparent border font-bold text-lg clip-polygon transition-all backdrop-blur-sm
-              border-zinc-300 text-zinc-700 hover:border-fuchsia-600 hover:text-fuchsia-600 hover:shadow-[0_0_30px_rgba(192,38,211,0.2)]
-              dark:border-zinc-700 dark:text-white dark:hover:border-fuchsia-500 dark:hover:text-fuchsia-500 dark:hover:shadow-[0_0_30px_rgba(217,70,239,0.3)]"
+            onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+            className="group w-full md:w-auto px-8 py-4 bg-transparent border-2 font-bold text-lg clip-polygon transition-all backdrop-blur-sm
+              border-zinc-700 text-zinc-900 hover:border-fuchsia-600 hover:text-fuchsia-600 hover:shadow-[0_0_30px_rgba(192,38,211,0.2)]
+              dark:border-zinc-500 dark:text-white dark:hover:border-fuchsia-500 dark:hover:text-fuchsia-500 dark:hover:shadow-[0_0_30px_rgba(217,70,239,0.3)]"
           >
             <span className="uppercase tracking-widest">Contact Me</span>
           </a>
@@ -364,11 +366,13 @@ const Hero = () => {
           text-cyan-700/50 dark:text-cyan-500/50">
           {[...Array(10)].map((_, i) => (
             <React.Fragment key={i}>
-              <span className="flex items-center gap-4"><Zap size={14} className="text-fuchsia-600 dark:text-fuchsia-500" /> Design & Code</span>
+              <span className="flex items-center gap-4"><Zap size={14} className="text-fuchsia-600 dark:text-fuchsia-500" /> React · Godot · Flask</span>
               <span className="text-zinc-400 dark:text-zinc-700">::</span>
-              <span className="flex items-center gap-4">Performance First</span>
+              <span className="flex items-center gap-4">Available for Hire</span>
               <span className="text-zinc-400 dark:text-zinc-700">::</span>
-              <span className="flex items-center gap-4">Immersive UX</span>
+              <span className="flex items-center gap-4">Web · Game · Design</span>
+              <span className="text-zinc-400 dark:text-zinc-700">::</span>
+              <span className="flex items-center gap-4"><Zap size={14} className="text-cyan-600 dark:text-cyan-500" /> Based in the Philippines</span>
               <span className="text-zinc-400 dark:text-zinc-700">::</span>
             </React.Fragment>
           ))}

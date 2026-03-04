@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Github, Cpu, Zap, Gamepad2, Terminal } from 'lucide-react';
+import { Mail, Github, Linkedin, Cpu, Zap, Gamepad2, Terminal } from 'lucide-react';
 import { TECH_STACK } from '../../data/mockData';
 
 const AboutAndSkills = () => {
@@ -55,7 +55,7 @@ const AboutAndSkills = () => {
                 border-fuchsia-600 dark:border-fuchsia-500">
               </div>
 
-              <div className="prose dark:prose-invert leading-relaxed space-y-4 font-mono text-sm md:text-base
+              <div className="prose dark:prose-invert leading-relaxed space-y-4 font-sans text-sm md:text-base
                 text-zinc-600 dark:text-gray-400">
                 <p>
                   I am a passionate developer who bridges the gap between <strong className="text-zinc-900 dark:text-white">logic and creativity</strong>. 
@@ -76,10 +76,15 @@ const AboutAndSkills = () => {
                       dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-red-500 dark:hover:text-white">
                       <Mail size={20} />
                     </a>
-                    <a href="https://github.com/Ekskie" className="p-2 transition-colors rounded
+                    <a href="https://github.com/Ekskie" target="_blank" rel="noopener noreferrer" className="p-2 transition-colors rounded
                       bg-zinc-100 text-zinc-600 hover:bg-black hover:text-white
                       dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-white dark:hover:text-black">
                       <Github size={20} />
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 transition-colors rounded
+                      bg-zinc-100 text-zinc-600 hover:bg-blue-600 hover:text-white
+                      dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-blue-600 dark:hover:text-white">
+                      <Linkedin size={20} />
                     </a>
                   </div>
               </div>

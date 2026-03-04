@@ -9,7 +9,7 @@ const Process = () => {
       subtitle: "Discovery & Strategy",
       icon: Database,
       description: "Analyzing requirements, defining architecture, and establishing the database schema. Every pixel starts with a plan.",
-      color: "from-cyan-500 to-blue-500"
+      color: "from-cyan-500 to-sky-500"
     },
     {
       id: "02",
@@ -17,7 +17,7 @@ const Process = () => {
       subtitle: "UI/UX Design",
       icon: Layout,
       description: "Wireframing interfaces and designing user journeys. Creating high-fidelity prototypes that balance aesthetics with usability.",
-      color: "from-blue-500 to-indigo-500"
+      color: "from-sky-500 to-blue-500"
     },
     {
       id: "03",
@@ -25,7 +25,7 @@ const Process = () => {
       subtitle: "Development",
       icon: Code2,
       description: "Writing clean, scalable code. Implementing logic, integrating APIs, and ensuring performance across all devices.",
-      color: "from-indigo-500 to-purple-500"
+      color: "from-blue-500 to-violet-500"
     },
     {
       id: "04",
@@ -33,18 +33,42 @@ const Process = () => {
       subtitle: "Launch & CI/CD",
       icon: Rocket,
       description: "Rigorous testing, automated deployment, and post-launch monitoring. Ensuring 99.9% uptime and stability.",
-      color: "from-purple-500 to-fuchsia-500"
+      color: "from-violet-500 to-fuchsia-500"
     }
   ];
 
   return (
-    <section id="process" className="py-20 relative overflow-hidden bg-zinc-50 dark:bg-black transition-colors duration-300">
+    <section id="process" className="py-24 relative overflow-hidden bg-zinc-50 dark:bg-black border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500">
+      {/* Background Atmosphere - Grid Pattern */}
+      <div className="absolute inset-0 bg-[size:40px_40px] pointer-events-none opacity-30
+        bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)]
+        dark:bg-[linear-gradient(rgba(20,20,20,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.5)_1px,transparent_1px)]">
+      </div>
+
+      {/* Top Gradient Fade */}
+      <div className="absolute top-0 left-0 w-full h-32 z-10
+        bg-gradient-to-b from-zinc-50 to-transparent
+        dark:from-black dark:to-transparent">
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter text-zinc-900 dark:text-white">
-            SYSTEM <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">WORKFLOW</span>
-          </h2>
-          <div className="h-1 w-20 bg-cyan-500"></div>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 border-b pb-8 gap-8
+          border-zinc-200 dark:border-zinc-800/50">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Code2 size={20} className="text-cyan-600 dark:text-cyan-500" />
+              <h2 className="text-sm font-bold font-mono uppercase tracking-widest
+                text-cyan-700 dark:text-cyan-500">
+                How I Work
+              </h2>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter
+              text-zinc-900 dark:text-white">
+              SYSTEM <span className="text-transparent bg-clip-text bg-gradient-to-r 
+                from-cyan-600 to-fuchsia-600
+                dark:from-cyan-400 dark:to-fuchsia-500">WORKFLOW</span>
+            </h2>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -53,7 +77,7 @@ const Process = () => {
               {/* Connector Line (Desktop) */}
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-12 left-1/2 w-full h-[2px] bg-zinc-200 dark:bg-zinc-800 -z-10">
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-700 w-0 group-hover:w-full"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-opacity duration-700 w-0 group-hover:w-full"></div>
                 </div>
               )}
 
@@ -78,7 +102,7 @@ const Process = () => {
                 </p>
 
                 {/* Hover Glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
               </div>
             </div>
           ))}

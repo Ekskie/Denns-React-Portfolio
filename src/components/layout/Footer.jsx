@@ -46,13 +46,14 @@ const Footer = () => {
              
              <div className="flex gap-6">
                {[
-                 { icon: Github, href: "https://github.com/Ekskie" },
-                 { icon: Linkedin, href: "https://linkedin.com" }, // Add your LinkedIn URL
-                 { icon: Instagram, href: "https://www.instagram.com/denden.nitsuga/" }
+                 { icon: Github, href: "https://github.com/Ekskie", label: "GitHub" },
+                 { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+                 { icon: Instagram, href: "https://www.instagram.com/denden.nitsuga/", label: "Instagram" }
                ].map((social, index) => (
-                 <a key={index} href={social.href} target="_blank" rel="noopener noreferrer" 
-                    className="transition-colors hover:scale-110 transform duration-300 text-zinc-400 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-white">
-                    <social.icon size={32} />
+                 <a key={index} href={social.href} target="_blank" rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="p-3 rounded-lg transition-all duration-300 hover:scale-110 transform text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-500 dark:hover:text-white dark:hover:bg-zinc-900">
+                    <social.icon size={24} />
                  </a>
                ))}
              </div>
