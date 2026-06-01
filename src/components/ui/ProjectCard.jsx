@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, X, Maximize2, Terminal, Code2, Layers, Github, Cpu } from 'lucide-react';
+import { ExternalLink, X, Maximize2, Terminal, Code2, Layers, Github, Cpu, GitBranch } from 'lucide-react';
 import { createPortal } from 'react-dom';
+import { supabase } from '../../lib/supabaseClient';
 
 // --- Modal Component ---
 const Modal = ({ isOpen, onClose, children }) => {
@@ -34,10 +35,84 @@ const Modal = ({ isOpen, onClose, children }) => {
 // --- Main Project Card ---
 const ProjectCard = ({ project }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [repoClickCount, setRepoClickCount] = useState(0);
+
+  // Fetch repo click count on mount and when modal opens
+  useEffect(() => {
+    if (project.repo_link) {
+      fetchRepoClicks();
+      
+      // Subscribe to any new analytics events
+      const subscription = supabase
+        .channel(`analytics-changes`)
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'analytics'
+          },
+          (payload) => {
+            // Check if this insert is for our repo
+            if (payload.new.event_type === 'outbound_click') {
+              fetchRepoClicks();
+            }
+          }
+        )
+        .subscribe();
+
+      // Also refetch every 1.5 seconds for immediate feedback
+      const interval = setInterval(() => {
+        fetchRepoClicks();
+      }, 1500);
+
+      return () => {
+        clearInterval(interval);
+        subscription.unsubscribe();
+      };
+    }
+  }, [project.repo_link, project.id]);
+
+  const fetchRepoClicks = async () => {
+    if (!project.repo_link) return;
+    
+    try {
+      const { count, error } = await supabase
+        .from('analytics')
+        .select('id', { count: 'exact', head: true })
+        .eq('event_type', 'outbound_click')
+        .eq('details', project.repo_link);
+      
+      if (!error) {
+        setRepoClickCount(count || 0);
+      }
+    } catch (error) {
+      console.error("Error fetching repo clicks:", error);
+    }
+  };
 
   // Helper to handle external link click without opening modal
   const handleLinkClick = (e) => {
     e.stopPropagation();
+  };
+
+  // Handler for repository/GitHub click tracking
+  const handleRepoClick = async (e, repoUrl) => {
+    e.preventDefault();
+    
+    // Log the click to Supabase asynchronously
+    try {
+      await supabase.from('analytics').insert([
+        { event_type: 'outbound_click', details: repoUrl }
+      ]);
+      // Refetch the count immediately after logging
+      setTimeout(() => fetchRepoClicks(), 100);
+    } catch (error) {
+      console.error("Analytics tracking error:", error);
+    }
+    
+    // Immediately open the GitHub link in a new tab
+    window.open(repoUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -64,7 +139,7 @@ const ProjectCard = ({ project }) => {
         <div className="relative aspect-video overflow-hidden border-b
           border-zinc-200 dark:border-zinc-800">
           <img 
-            src={project.image_url} 
+            src={project.image_url || project.image} 
             alt={project.title} 
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 
               opacity-90 group-hover:opacity-100
@@ -161,7 +236,7 @@ const ProjectCard = ({ project }) => {
             <div className="relative h-64 md:h-96 w-full overflow-hidden group">
                <div className="absolute inset-0 bg-gradient-to-t from-zinc-50 dark:from-black to-transparent z-10" />
                <img 
-                src={project.image_url} 
+                src={project.image_url || project.image} 
                 alt={project.title} 
                 className="w-full h-full object-cover"
               />
@@ -245,15 +320,20 @@ const ProjectCard = ({ project }) => {
                     </a>
                     
                     {project.repo_link && (
-                        <a 
-                        href={project.repo_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        <button
+                        onClick={(e) => handleRepoClick(e, project.repo_link)}
                         className="flex items-center justify-center gap-2 w-full py-4 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white font-bold uppercase tracking-wider rounded transition-all border border-zinc-300 dark:border-zinc-700"
                         >
                         <Github size={18} />
                         Access Source
-                        </a>
+                        </button>
+                    )}
+                    
+                    {project.repo_link && (
+                      <div className="flex items-center justify-center gap-2 py-2 px-4 bg-green-900/20 border border-green-700/50 rounded text-green-600 dark:text-green-400 text-xs font-mono">
+                        <GitBranch size={14} />
+                        <span>{repoClickCount} {repoClickCount === 1 ? 'click' : 'clicks'}</span>
+                      </div>
                     )}
                   </div>
 

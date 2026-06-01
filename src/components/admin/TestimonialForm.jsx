@@ -13,6 +13,7 @@ const TestimonialForm = ({ onClose, onSaved, initialData }) => {
 
   useEffect(() => {
     if (initialData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         name: initialData.name || '',
         role: initialData.role || '',

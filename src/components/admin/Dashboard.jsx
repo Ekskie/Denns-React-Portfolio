@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabaseClient.js';
-import { Trash2, Plus, LogOut, LayoutGrid, MessageSquare, Pencil, Loader2, Search, Activity, Database, Server } from 'lucide-react';
+import { Trash2, Plus, LogOut, LayoutGrid, MessageSquare, Pencil, Loader2, Search, Activity, Database, Server, Eye, GitBranch } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ProjectForm from './ProjectForm.jsx';
 import TestimonialForm from './TestimonialForm.jsx';
@@ -15,7 +15,8 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   
   // Dashboard Stats
-  const [stats, setStats] = useState({ projects: 0, testimonials: 0 });
+  const [stats, setStats] = useState({ projects: 0, testimonials: 0, visits: 0 });
+  const [analytics, setAnalytics] = useState({ totalVisits: 0, repoClicks: {} });
 
   const navigate = useNavigate();
 
@@ -46,13 +47,92 @@ const Dashboard = () => {
     if (isAuthenticated) {
       fetchData();
       fetchStats();
+      fetchAnalytics();
+      
+      // Set up real-time analytics updates every 3 seconds
+      const analyticsInterval = setInterval(() => {
+        fetchAnalytics();
+        fetchStats();
+      }, 3000);
+      
+      // Subscribe to real-time changes in analytics table
+      const analyticsSubscription = supabase
+        .channel('analytics-changes')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'analytics'
+          },
+          (payload) => {
+            fetchAnalytics();
+            fetchStats();
+          }
+        )
+        .subscribe();
+
+      return () => {
+        clearInterval(analyticsInterval);
+        analyticsSubscription.unsubscribe();
+      };
     }
-  }, [activeTab, isAuthenticated]);
+  }, [isAuthenticated]);
 
   const fetchStats = async () => {
     const { count: projectCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
     const { count: testimonialCount } = await supabase.from('testimonials').select('*', { count: 'exact', head: true });
-    setStats({ projects: projectCount || 0, testimonials: testimonialCount || 0 });
+    
+    // Get visit count
+    const { count: visitCount } = await supabase
+      .from('analytics')
+      .select('*', { count: 'exact', head: true })
+      .eq('event_type', 'page_view');
+    
+    setStats({ 
+      projects: projectCount || 0, 
+      testimonials: testimonialCount || 0, 
+      visits: visitCount || 0 
+    });
+  };
+
+  const fetchAnalytics = async () => {
+    try {
+      // Get total page visits
+      const { count: visitCount, error: viewError } = await supabase
+        .from('analytics')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_type', 'page_view');
+      
+      // Get all outbound clicks grouped by repo
+      const { data: clicks, error: clickError } = await supabase
+        .from('analytics')
+        .select('details')
+        .eq('event_type', 'outbound_click');
+      
+      if (!viewError && !clickError) {
+        // Count clicks per repo
+        const repoClicksMap = {};
+        if (clicks) {
+          clicks.forEach(click => {
+            const repo = click.details || 'unknown';
+            repoClicksMap[repo] = (repoClicksMap[repo] || 0) + 1;
+          });
+        }
+        
+        setAnalytics({
+          totalVisits: visitCount || 0,
+          repoClicks: repoClicksMap
+        });
+        
+        setStats(prev => ({
+          ...prev,
+          visits: visitCount || 0
+        }));
+      }
+    } catch (error) {
+      console.error("Analytics fetch error:", error);
+    }
   };
 
   const fetchData = async () => {
@@ -146,6 +226,11 @@ const Dashboard = () => {
                    <p className="text-[10px] text-zinc-500 uppercase">Feedback</p>
                    <p className="text-xl font-bold text-fuchsia-500 leading-none">{stats.testimonials}</p>
                 </div>
+                <div className="w-px bg-zinc-800 h-8"></div>
+                <div className="text-right">
+                   <p className="text-[10px] text-zinc-500 uppercase flex items-center gap-1"><Eye size={10} className="text-green-500" /> Visits</p>
+                   <p className="text-xl font-bold text-green-400 leading-none">{stats.visits}</p>
+                </div>
              </div>
 
             <button onClick={handleLogout} className="flex items-center gap-2 border border-zinc-800 hover:bg-red-950/30 hover:border-red-500/50 hover:text-red-400 p-2 px-4 text-zinc-400 transition-all rounded text-xs font-bold uppercase tracking-wider">
@@ -226,6 +311,14 @@ const Dashboard = () => {
                        <span className={activeTab === 'projects' ? 'text-cyan-600' : 'text-fuchsia-600'}>
                           {activeTab === 'projects' ? item.category : item.role}
                        </span>
+                       {activeTab === 'projects' && item.repo_link && (
+                          <>
+                             <span className="text-zinc-600">//</span>
+                             <span className="flex items-center gap-1 text-green-600">
+                                <GitBranch size={10} /> {analytics.repoClicks[item.repo_link] || 0} clicks
+                             </span>
+                          </>
+                       )}
                     </div>
                   </div>
                 </div>

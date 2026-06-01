@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './context/ThemeContext.jsx';
-
+import { supabase } from './lib/supabaseClient';
 // Public Components
 import NavBar from './components/layout/NavBar.jsx';
 import Footer from './components/layout/Footer.jsx';
@@ -65,6 +65,21 @@ const AppContent = () => {
       setLoading(false);
     }, 100);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Track page view visit
+  useEffect(() => {
+    const logVisit = async () => {
+      try {
+        await supabase.from('analytics').insert([
+          { event_type: 'page_view', details: window.location.pathname }
+        ]);
+      } catch (error) {
+        console.error("Tracking error:", error);
+      }
+    };
+    
+    logVisit();
   }, []);
 
   return (
